@@ -3,7 +3,7 @@
     <Header />
     <div class="card">
       <h1 class="title">hello</h1>
-      <p>Click the button to download the thing, I guess...</p>
+      <p class="my-12">Click the button to download the thing, I guess...</p>
       <Button :loading="loading" @click.native="onDownloadCsv">Download</Button>
     </div>
   </div>
@@ -21,13 +21,12 @@ export default {
   methods: {
     async onDownloadCsv() {
       this.loading = true;
-      console.log("huh");
 
       try {
         await new Promise((resolve) => {
           setTimeout(() => {
             resolve(alert("Yup, you certainly downloaded the thing!"));
-          }, 5000);
+          }, 3000);
         });
       } catch (error) {
         this.errorMessage = error.message;

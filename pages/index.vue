@@ -1,7 +1,8 @@
 <template>
   <div class="container">
     <form @submit.prevent="onSubmit" class="card form">
-      <h1 class="title">WELCOME</h1>
+      <h1 class="title mb-12">WELCOME</h1>
+
       <div class="form-group">
         <label for="email" class="sr-only">Email</label>
         <div class="icon-container">
@@ -62,7 +63,7 @@
         {{ errorMessage }}
       </div>
 
-      <Button type="submit" class="btn" :loading="loading">LOG IN</Button>
+      <Button type="submit" class="btn mt-8" :loading="loading">LOG IN</Button>
     </form>
   </div>
 </template>
@@ -93,7 +94,7 @@ export default {
                 password: ${new Array(this.password.length).fill("*").join("")}
               `)
             );
-          }, 5000);
+          }, 3000);
         });
       } catch (error) {
         this.errorMessage = error.message;

@@ -13,11 +13,11 @@
   }
 
   .card .title {
-    @apply uppercase font-semibold tracking-widest text-blue-900 text-xl mb-12;
+    @apply uppercase font-semibold tracking-widest text-blue-900 text-xl;
   }
 
   .btn {
-    @apply relative w-full p-4 mt-8 bg-blue-900 text-white font-semibold tracking-wider text-xl rounded-md shadow-md focus:outline-none focus:ring focus:border-blue-200
+    @apply relative w-full p-4 bg-blue-900 text-white font-semibold tracking-wider text-xl rounded-md shadow-md focus:outline-none focus:ring focus:border-blue-200
   }
 
   .error {
