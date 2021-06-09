@@ -1,0 +1,26 @@
+/* ./assets/css/tailwind.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .header {
+    @apply fixed inset-x-0 top-0 h-24 bg-white shadow-md p-4 md:p-6 flex items-center justify-end;
+  }
+
+  .card {
+    @apply p-4 md:p-6 bg-white shadow-lg rounded-md;
+  }
+
+  .card .title {
+    @apply uppercase font-semibold tracking-widest text-blue-900 text-xl mb-12;
+  }
+
+  .btn {
+    @apply relative w-full p-4 mt-8 bg-blue-900 text-white font-semibold tracking-wider text-xl rounded-md shadow-md focus:outline-none focus:ring focus:border-blue-200
+  }
+
+  .error {
+    @apply text-red-500 italic font-bold;
+  }
+}
