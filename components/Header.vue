@@ -23,10 +23,16 @@
 <script>
 export default {
   methods: {
-    onSignOut() {
-      this.$router.replace("/");
-    },
-  },
+    async onSignOut() {
+      try {
+        await this.$auth.logout();
+      } catch (err) {
+        console.error(err);
+      } finally {
+        localStorage.clear();
+      }
+    }
+  }
 };
 </script>
 

@@ -7,6 +7,12 @@
   </main>
 </template>
 
+<script>
+export default {
+  name: "default"
+};
+</script>
+
 <style scoped>
 html {
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -99,4 +105,3 @@ main {
   }
 }
 </style>
-
