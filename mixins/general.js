@@ -34,6 +34,5 @@ export default {
       let splitName = fileName.split("/");
       return splitName;
     }
-    // displayFileDate()
   }
 };

@@ -76,10 +76,6 @@
           >Back to Log In
         </Button>
       </div>
-
-      <!-- <div v-if="errorMessage !== ''">
-        <nuxt-link to="/">Back to Login</nuxt-link>
-      </div> -->
     </form>
   </div>
 </template>
