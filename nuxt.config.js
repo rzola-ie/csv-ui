@@ -39,7 +39,6 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    // baseURL: "http://localhost:3004/api",
     baseURL: process.env.CSV_API_URL,
     credentials: false
     // proxy: true
