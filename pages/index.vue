@@ -126,10 +126,14 @@ export default {
           this.$router.push({ name: "dashboard" });
         } else {
           this.errorMessage = "You do not have permission to access this app";
+          this.loading = false;
+          this.$auth.logout();
           localStorage.clear();
         }
       } catch (error) {
         console.error(error);
+        this.loading = false;
+        this.$auth.logout();
         if (error.response) {
           switch (error.response.status) {
             case 401:
@@ -141,13 +145,15 @@ export default {
           }
         }
       } finally {
-        this.loading = false;
+        // this.loading = false;
       }
     },
     routeToLogin() {
+      this.loading = false;
       this.errorMessage = "";
       this.email = "";
       this.password = "";
+      this.$auth.logout();
       localStorage.clear();
       this.$router.push("/");
     }
