@@ -125,6 +125,4 @@ td {
   cursor: pointer;
   padding-left: 50px;
 }
-#file-date {
-}
 </style>
