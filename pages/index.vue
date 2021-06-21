@@ -126,6 +126,7 @@ export default {
           this.$router.push({ name: "dashboard" });
         } else {
           this.errorMessage = "You do not have permission to access this app";
+          localStorage.clear();
         }
       } catch (error) {
         console.error(error);
@@ -147,6 +148,7 @@ export default {
       this.errorMessage = "";
       this.email = "";
       this.password = "";
+      localStorage.clear();
       this.$router.push("/");
     }
   }
