@@ -4,6 +4,12 @@
   </main>
 </template>
 
+<script>
+export default {
+  name: "portal"
+};
+</script>
+
 <style scoped>
 html {
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -33,11 +39,12 @@ body {
 }
 
 main {
-  @apply bg-blue-300;
-  /* background: #def0fb; */
+  /* @apply bg-blue-300; */
+  background: #def0fb;
   flex: 1;
   width: 100vw;
   position: relative;
   overflow: hidden;
+  min-height: 100vh;
 }
 </style>

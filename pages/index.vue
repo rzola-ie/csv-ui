@@ -63,19 +63,35 @@
         {{ errorMessage }}
       </div>
 
-      <Button type="submit" class="btn mt-8" :loading="loading">LOG IN</Button>
+      <Button
+        v-if="errorMessage === ''"
+        type="submit"
+        class="btn mt-8"
+        :loading="loading"
+      >
+        LOG IN</Button
+      >
+      <div v-if="errorMessage !== ''" @click="routeToLogin">
+        <Button type="submit" class="btn mt-8" :loading="loading"
+          >Back to Log In
+        </Button>
+      </div>
     </form>
   </div>
 </template>
 
 <script scoped>
+import general from "@/mixins/general";
+
 export default {
+  auth: false,
+  mixins: [general],
   data() {
     return {
       email: "",
       password: "",
       loading: false,
-      errorMessage: "",
+      errorMessage: ""
     };
   },
   methods: {
@@ -84,25 +100,60 @@ export default {
       this.errorMessage = "";
 
       try {
-        await new Promise((resolve) => {
-          setTimeout(() => {
-            resolve(
-              alert(`
-                HERE IS SOME STUFF
-
-                email: ${this.email}
-                password: ${new Array(this.password.length).fill("*").join("")}
-              `)
-            );
-          }, 3000);
+        const { data } = await this.$auth.loginWith("local", {
+          data: {
+            email: this.email,
+            password: this.password
+          }
         });
-      } catch (error) {
-        this.errorMessage = error.message;
-      }
+        // const { data } = await this.$axios.post("/login", {
+        //   email: this.email,
+        //   password: this.password
+        // });
+        // console.log("loggedin user data", data);
+        localStorage.clear();
+        this.$auth.setUserToken(data.idToken);
+        delete data.idToken;
+        this.$auth.setUser(data);
+        this.$auth.$storage.setLocalStorage("user", data, true);
+        // this.$auth.$storage.setUniversal("user", data);
 
-      this.$router.push("/dashboard");
+        if (this.canDownloadClinPartCSV()) {
+          this.$router.push({ name: "dashboard" });
+        } else {
+          this.errorMessage = "You do not have permission to access this app";
+          this.loading = false;
+          this.$auth.logout();
+          localStorage.clear();
+        }
+      } catch (error) {
+        console.error(error);
+        this.loading = false;
+        this.$auth.logout();
+        if (error.response) {
+          switch (error.response.status) {
+            case 401:
+            case 404:
+              this.errorMessage = "You do not have the right login credentials";
+              break;
+            default:
+              this.errorMessage = error.message;
+          }
+        }
+      } finally {
+        // this.loading = false;
+      }
     },
-  },
+    routeToLogin() {
+      this.loading = false;
+      this.errorMessage = "";
+      this.email = "";
+      this.password = "";
+      this.$auth.logout();
+      localStorage.clear();
+      this.$router.push("/");
+    }
+  }
 };
 </script>
 

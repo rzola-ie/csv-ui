@@ -1,54 +1,62 @@
 <template>
-  <div class="container">
+  <div v-if="isAuthenticated" class="container">
     <Header />
-    <div class="card">
-      <h1 class="title">hello</h1>
-      <p class="my-12">Click the button to download the thing, I guess...</p>
-      <Button :loading="loading" @click.native="onDownloadCsv">Download</Button>
-    </div>
+    <download-files :file-list="fileList" />
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import DownloadFiles from "@/components/DownloadFiles";
+
 export default {
   layout: "portal",
+  components: {
+    DownloadFiles
+  },
+
+  middleware: "auth",
+
+  async asyncData({ app }) {
+    const { $axios } = app;
+
+    try {
+      const { data } = await $axios.get(`/files/list`);
+      // console.log("files list data", data);
+      return {
+        fileList: data
+      };
+    } catch (err) {
+      console.error(err);
+      return {
+        fileList: []
+      };
+    }
+  },
   data() {
     return {
-      loading: false,
-      errorMessage: "",
+      fileList: []
     };
   },
-  methods: {
-    async onDownloadCsv() {
-      this.loading = true;
-
-      try {
-        await new Promise((resolve) => {
-          setTimeout(() => {
-            resolve(alert("Yup, you certainly downloaded the thing!"));
-          }, 3000);
-        });
-      } catch (error) {
-        this.errorMessage = error.message;
-      }
-
-      this.loading = false;
-    },
-  },
+  computed: {
+    ...mapGetters(["isAuthenticated", "loggedInUser"])
+  }
 };
 </script>
 
 <style scoped>
 .container {
+  /* border: 2px solid red; */
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
-  justify-content: center;
+  /* justify-content: space-between; */
   align-items: center;
   text-align: center;
+  /* margin: 0 auto; */
 }
 
-.card {
+/* .card {
   @apply w-11/12 md:w-1/3;
-}
+} */
 </style>
